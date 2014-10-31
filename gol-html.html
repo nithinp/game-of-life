@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>~\neo\graphics\GOL\6.py.html</title>
+<meta name="Generator" content="Vim/7.3">
+<meta name="plugin-version" content="vim7.3_v6">
+<meta name="syntax" content="python">
+<meta name="settings" content="use_css">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+.Statement { color: #804040; font-weight: bold; }
+.Identifier { color: #008080; }
+.Constant { color: #ff00ff; }
+.PreProc { color: #a020f0; }
+.Comment { color: #0000ff; }
+-->
+</style>
+</head>
+<body>
+<pre>
+
+<span class="Comment">########################################################################</span>
+<span class="Comment">#                                                                      #</span>
+<span class="Comment">#                      Nithin's Game of Life!!                         #</span>
+<span class="Comment">#                                                                      #</span>
+<span class="Comment">#                                                                      #</span>
+<span class="Comment"># CREATED BY    :    Nithin.P                                          #</span>
+<span class="Comment">#                    nithup123@gmail.com                               #</span>
+<span class="Comment">#                    <a href="http://facebook.com/nithin.nithinp">http://facebook.com/nithin.nithinp</a>                #</span>
+<span class="Comment">#                                                                      #</span>
+<span class="Comment"># Description   :    This is my version of world famous Conway's       #</span>
+<span class="Comment">#                    Game of Life I coded this in python using pygame  #</span>
+<span class="Comment">#                    module. I used my own logic to create this.       #</span>
+<span class="Comment">#                                                                      #</span>
+<span class="Comment"># License       :    This Source Code is free to use                   #</span>
+<span class="Comment">#                    for educational purpose only.                     #</span>
+<span class="Comment">#                                                                      #</span>
+<span class="Comment"># Instructions  :    Mouse click on the small cels to select an        #</span>
+<span class="Comment">#                    initial configuration                             #</span>
+<span class="Comment">#                    Press 'S' to start the simulation                 #</span>
+<span class="Comment">#                    Press 'S' again to stop the simulation            #</span>
+<span class="Comment">#                    Press 'r' to reset the screen.                    #</span>
+<span class="Comment">#                    Create nice patterns and watch  ho it simulates   #</span>
+<span class="Comment">#                                                                      #</span>
+<span class="Comment">########################################################################</span>
+
+
+
+<span class="PreProc">import</span> pygame
+<span class="PreProc">import</span> sys
+
+<span class="Comment"># Initial Conditions.</span>
+
+white=(<span class="Constant">255</span>,<span class="Constant">255</span>,<span class="Constant">255</span>)
+black=(<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>)
+green=(<span class="Constant">0</span>,<span class="Constant">255</span>,<span class="Constant">0</span>)
+red=(<span class="Constant">255</span>,<span class="Constant">0</span>,<span class="Constant">0</span>)
+blue=(<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">255</span>)
+gray=(<span class="Constant">128</span>,<span class="Constant">128</span>,<span class="Constant">128</span>)
+size=[<span class="Constant">1000</span>,<span class="Constant">650</span>]
+new_initial_pattern=<span class="Identifier">True</span>
+<span class="Comment"># Array to represent screen</span>
+game=[ [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>],
+        [<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>,<span class="Constant">0</span>] ]
+start_simulation=<span class="Identifier">False</span>
+time_limit=<span class="Constant">200</span>
+time1=pygame.time.get_ticks()
+generations=<span class="Constant">0</span>
+alive=<span class="Constant">0</span>
+dead=<span class="Constant">0</span>
+
+
+
+
+
+
+
+<span class="Comment"># Function to reset screen.</span>
+
+<span class="Statement">def</span> <span class="Identifier">reset</span>() :
+        <span class="Statement">global</span> new_initial_pattern
+        <span class="Statement">global</span> start_simulation
+        <span class="Statement">global</span> time1
+        <span class="Statement">global</span> generations
+        <span class="Statement">global</span> alive
+        <span class="Statement">global</span> dead
+        new_initial_pattern=<span class="Identifier">True</span>
+        start_simulation=<span class="Identifier">False</span>
+        time1=pygame.time.get_ticks()
+        generations=<span class="Constant">0</span>
+        alive=<span class="Constant">0</span>
+        dead=<span class="Constant">0</span>
+        <span class="Statement">for</span> i <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">20</span>) :
+                <span class="Statement">for</span> j <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">40</span>) :
+                        game[i][j]=<span class="Constant">0</span>
+
+
+
+
+
+
+
+
+
+<span class="Comment"># Function for simulation.</span>
+
+<span class="Statement">def</span> <span class="Identifier">simulate</span>() :
+        <span class="Statement">global</span> time1
+        <span class="Statement">global</span> generations
+        <span class="Statement">global</span> alive
+        <span class="Statement">global</span> dead
+        <span class="Statement">if</span> pygame.time.get_ticks() &gt; (time1+<span class="Constant">200</span>) :
+                game1=[]
+                <span class="Statement">for</span> i <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">20</span>) :
+                        tt=[]
+                        <span class="Statement">for</span> j <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">40</span>) :
+                                tt.append(<span class="Constant">0</span>)
+                        game1.append(tt)
+                <span class="Statement">for</span> i <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">20</span>) :
+                        <span class="Statement">for</span> j <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">40</span>) :
+                                live_neighbours=<span class="Constant">0</span>
+                                <span class="Statement">if</span> (i-<span class="Constant">1</span>)&gt;=<span class="Constant">0</span> <span class="Statement">and</span> (j-<span class="Constant">1</span>)&gt;=<span class="Constant">0</span> <span class="Statement">and</span> (i+<span class="Constant">1</span>)&lt;<span class="Constant">20</span> <span class="Statement">and</span> (j+<span class="Constant">1</span>)&lt;<span class="Constant">40</span> :
+                                        <span class="Statement">if</span> game[i-<span class="Constant">1</span>][j-<span class="Constant">1</span>]==<span class="Constant">1</span> :
+                                                live_neighbours+=<span class="Constant">1</span>
+                                        <span class="Statement">if</span> game[i-<span class="Constant">1</span>][j]==<span class="Constant">1</span> :
+                                                live_neighbours+=<span class="Constant">1</span>
+                                        <span class="Statement">if</span> game[i-<span class="Constant">1</span>][j+<span class="Constant">1</span>]==<span class="Constant">1</span> :
+                                                live_neighbours+=<span class="Constant">1</span>
+                                        <span class="Statement">if</span> game[i][j-<span class="Constant">1</span>]==<span class="Constant">1</span> :
+                                                live_neighbours+=<span class="Constant">1</span>
+                                        <span class="Statement">if</span> game[i][j+<span class="Constant">1</span>]==<span class="Constant">1</span> :
+                                                live_neighbours+=<span class="Constant">1</span>
+                                        <span class="Statement">if</span> game[i+<span class="Constant">1</span>][j-<span class="Constant">1</span>]==<span class="Constant">1</span> :
+                                                live_neighbours+=<span class="Constant">1</span>
+                                        <span class="Statement">if</span> game[i+<span class="Constant">1</span>][j]==<span class="Constant">1</span> :
+                                                live_neighbours+=<span class="Constant">1</span>
+                                        <span class="Statement">if</span> game[i+<span class="Constant">1</span>][j+<span class="Constant">1</span>]==<span class="Constant">1</span> :
+                                                live_neighbours+=<span class="Constant">1</span>
+                                <span class="Statement">if</span> game[i][j]==<span class="Constant">1</span> :
+                                        <span class="Statement">if</span> live_neighbours&lt;<span class="Constant">2</span> :
+                                                game1[i][j]=<span class="Constant">0</span>
+                                        <span class="Statement">if</span> live_neighbours&gt;<span class="Constant">3</span> :
+                                                game1[i][j]=<span class="Constant">0</span>
+                                        <span class="Statement">if</span> live_neighbours==<span class="Constant">2</span> <span class="Statement">or</span> live_neighbours==<span class="Constant">3</span> :
+                                                game1[i][j]=<span class="Constant">1</span>
+                                <span class="Statement">if</span> game[i][j]==<span class="Constant">0</span> :
+                                        <span class="Statement">if</span> live_neighbours==<span class="Constant">3</span> :
+                                                game1[i][j]=<span class="Constant">1</span>
+                                        <span class="Statement">else</span> :
+                                                game1[i][j]=<span class="Constant">0</span>
+                alive=<span class="Constant">0</span>
+                <span class="Statement">for</span> i <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">20</span>) :
+                        <span class="Statement">for</span> j <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">40</span>) :
+                                game[i][j]=game1[i][j]
+                                <span class="Statement">if</span> game[i][j] :
+                                        alive+=<span class="Constant">1</span>
+                dead=<span class="Constant">800</span>-alive
+                generations+=<span class="Constant">1</span>
+                time1=pygame.time.get_ticks()
+
+
+
+
+
+
+<span class="Comment"># Function to set pattern.</span>
+
+<span class="Statement">def</span> <span class="Identifier">set_pattern</span>(cord) :
+        <span class="Statement">if</span> cord[<span class="Constant">1</span>]&gt;=(size[<span class="Constant">1</span>]-<span class="Constant">100</span>) <span class="Statement">or</span> cord[<span class="Constant">1</span>]&lt;<span class="Constant">50</span> :
+                <span class="Statement">return</span>
+        xx=<span class="Constant">0</span>
+        <span class="Statement">while</span> xx&lt;size[<span class="Constant">0</span>] :
+                <span class="Statement">if</span> cord[<span class="Constant">0</span>]&gt;=xx <span class="Statement">and</span> cord[<span class="Constant">0</span>]&lt;(xx+<span class="Constant">25</span>) :
+                        j=xx/<span class="Constant">25</span>
+                        <span class="Statement">break</span>
+                xx+=<span class="Constant">25</span>
+        yy=<span class="Constant">50</span>
+        <span class="Statement">while</span> yy&lt;(size[<span class="Constant">1</span>]-<span class="Constant">100</span>) :
+                <span class="Statement">if</span> cord[<span class="Constant">1</span>]&gt;=yy <span class="Statement">and</span> cord[<span class="Constant">1</span>]&lt;(yy+<span class="Constant">25</span>) :
+                        i=(yy/<span class="Constant">25</span>)-<span class="Constant">2</span>
+                        <span class="Statement">break</span>
+                yy+=<span class="Constant">25</span>
+        <span class="Statement">if</span> game[i][j]==<span class="Constant">0</span> :
+                game[i][j]=<span class="Constant">1</span>
+        <span class="Statement">else</span> :
+                game[i][j]=<span class="Constant">0</span>
+
+
+
+
+
+<span class="Comment"># Function to draw Screen.</span>
+
+<span class="Statement">def</span> <span class="Identifier">draw_screen</span>() :
+        screen.fill(white)
+        i=<span class="Constant">0</span>
+        <span class="Statement">while</span> i&lt;(size[<span class="Constant">0</span>]) :
+                pygame.draw.line(screen,gray,(i,<span class="Constant">50</span>),(i,size[<span class="Constant">1</span>]-<span class="Constant">100</span>))
+                i+=<span class="Constant">25</span>
+        i=<span class="Constant">50</span>
+        <span class="Statement">while</span> i&lt;=(size[<span class="Constant">1</span>]-<span class="Constant">100</span>) :
+                pygame.draw.line(screen,gray,(<span class="Constant">0</span>,i),(size[<span class="Constant">0</span>],i))
+                i+=<span class="Constant">25</span>
+        font=pygame.font.Font(<span class="Identifier">None</span>,<span class="Constant">30</span>)
+        generations1=<span class="Constant">'Generations : '</span>+<span class="Identifier">str</span>(generations)
+        generationsText=font.render(generations1,<span class="Identifier">True</span>,black)
+        generationsRect=generationsText.get_rect()
+        generationsRect.centerx=<span class="Constant">100</span>
+        generationsRect.centery=size[<span class="Constant">1</span>]-<span class="Constant">25</span>
+        screen.blit(generationsText,generationsRect)
+
+        alive1=<span class="Constant">'Alive : '</span>+<span class="Identifier">str</span>(alive)
+        aliveText=font.render(alive1,<span class="Identifier">True</span>,black)
+        aliveRect=aliveText.get_rect()
+        aliveRect.centerx=<span class="Identifier">int</span>(size[<span class="Constant">0</span>]/<span class="Constant">2</span>)
+        aliveRect.centery=size[<span class="Constant">1</span>]-<span class="Constant">25</span>
+        screen.blit(aliveText,aliveRect)
+
+        dead1=<span class="Constant">'Dead : '</span>+<span class="Identifier">str</span>(dead)
+        deadText=font.render(dead1,<span class="Identifier">True</span>,black)
+        deadRect=deadText.get_rect()
+        deadRect.centerx=size[<span class="Constant">0</span>]-<span class="Constant">100</span>
+        deadRect.centery=size[<span class="Constant">1</span>]-<span class="Constant">25</span>
+        screen.blit(deadText,deadRect)
+
+        instr=<span class="Constant">&quot;Mouse click to select initial configuration.Press 's' to start/stop simulation or 'r' to reset the screen.&quot;</span>
+        instrText=font.render(instr,<span class="Identifier">True</span>,black)
+        instrRect=instrText.get_rect()
+        instrRect.centerx=<span class="Identifier">int</span>(size[<span class="Constant">0</span>]/<span class="Constant">2</span>)
+        instrRect.centery=size[<span class="Constant">1</span>]-<span class="Constant">75</span>
+        screen.blit(instrText,instrRect)
+
+        name=<span class="Constant">&quot;Nithin's Game Of Life&quot;</span>
+        nameText=font.render(name,<span class="Identifier">True</span>,black)
+        nameRect=nameText.get_rect()
+        nameRect.centerx=<span class="Identifier">int</span>(size[<span class="Constant">0</span>]/<span class="Constant">2</span>)
+        nameRect.centery=<span class="Constant">25</span>
+        screen.blit(nameText,nameRect)
+
+
+
+<span class="Comment"># Function to draw pattern.</span>
+
+<span class="Statement">def</span> <span class="Identifier">draw_pattern</span>() :
+        <span class="Statement">for</span> i <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">20</span>) :
+                <span class="Statement">for</span> j <span class="Statement">in</span> <span class="Identifier">range</span>(<span class="Constant">40</span>) :
+                        <span class="Statement">if</span> game[i][j]==<span class="Constant">1</span> :
+                                left=(j*<span class="Constant">25</span>)+<span class="Constant">1</span>
+                                up=(i*<span class="Constant">25</span>)+<span class="Constant">50</span>+<span class="Constant">1</span>
+                                pygame.draw.rect(screen,green,(left,up,<span class="Constant">24</span>,<span class="Constant">24</span>))
+
+pygame.init()
+screen=pygame.display.set_mode(size,<span class="Constant">0</span>,<span class="Constant">32</span>)
+pygame.display.set_caption(<span class="Constant">&quot;Nithin's Game Of Life!!!&quot;</span>)
+<span class="Comment"># Main game loop</span>
+<span class="Statement">while</span> <span class="Identifier">True</span> :
+        <span class="Statement">for</span> event <span class="Statement">in</span> pygame.event.get() :
+                <span class="Statement">if</span> event.<span class="Identifier">type</span>==pygame.QUIT :
+                        sys.exit()
+                        pygame.quit()
+                <span class="Statement">elif</span> event.<span class="Identifier">type</span>==pygame.MOUSEBUTTONDOWN :
+                        <span class="Statement">if</span> new_initial_pattern :
+                                set_pattern(pygame.mouse.get_pos())
+                <span class="Statement">if</span> event.<span class="Identifier">type</span> == pygame.KEYDOWN :
+                        <span class="Statement">if</span> event.key == <span class="Identifier">ord</span>(<span class="Constant">'s'</span>) :
+                                <span class="Statement">if</span> start_simulation :
+                                        start_simulation=<span class="Identifier">False</span>
+                                <span class="Statement">else</span> :
+                                        start_simulation=<span class="Identifier">True</span>
+                                        new_initial_pattern=<span class="Identifier">False</span>
+                        <span class="Statement">if</span> event.key == <span class="Identifier">ord</span>(<span class="Constant">'r'</span>) :
+                                reset()
+
+        <span class="Statement">if</span> start_simulation :
+                simulate()
+        draw_screen()
+        draw_pattern()
+        pygame.display.update()
+</pre>
+</body>
+</html>
